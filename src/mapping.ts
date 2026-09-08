@@ -4,6 +4,12 @@ import type { PlayerId } from "./types";
  * 乙键盘通过 Karabiner 把按键变成 Option 层字符（a → å），
  * 游戏再把这些字符还原成「乙打的 ASCII」。
  *
+ * 两个人可以同时打：浏览器只有一个焦点，但每个 keydown 独立分流到左/右，
+ * 不靠两个输入框。甲走内置键盘的普通字母；乙走外接键盘被改写后的 å。
+ *
+ * Karabiner Devices 里只给乙的外接键盘勾 Modify events，内置键盘不要勾。
+ * 这样 Option 只出现在乙的虚拟键上，甲的按键不会被带上 Option。
+ *
  * 死键（e/i/n/u/`）无法走 Option 方案，Karabiner 会改成 Control+Option。
  * 退格 / 回车 / Tab 同样走 Control+Option，避免触发系统快捷键。
  */

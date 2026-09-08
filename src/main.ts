@@ -31,9 +31,17 @@ let countdown = 3;
 let probe = "按下任意键，识别甲 / 乙";
 let finishAt = 0;
 let lastChaosKey = "";
+const testPads: Record<PlayerId, string> = { A: "", B: "" };
 
 const hub = createInputHub((action) => {
-  if (screen === "setup" || screen === "title" || screen === "lobby") {
+  if (screen === "setup") {
+    probe = hub.lastRaw;
+    if (action.kind === "char") testPads[action.player] += action.value;
+    if (action.kind === "backspace") {
+      testPads[action.player] = testPads[action.player].slice(0, -1);
+    }
+    render();
+  } else if (screen === "title" || screen === "lobby") {
     probe = hub.lastRaw;
     render();
   }
@@ -186,18 +194,30 @@ function render(): void {
           </label>
         </div>
         <div class="probe">${probe}</div>
+        <div class="pads">
+          <div class="pad A"><div class="pill">甲 · 内置键盘</div><pre>${escapeHtml(testPads.A) || "（同时打，字出现在这边）"}</pre></div>
+          <div class="pad B"><div class="pill">乙 · å 键盘</div><pre>${escapeHtml(testPads.B) || "（乙的 a 会变成 å，再译回 a）"}</pre></div>
+        </div>
         <p class="help">
-          把 Karabiner 规则 <span class="kbd">public/karabiner/computerization-typeduel.json</span> 导入后，
-          笔记本内置键盘是甲，外接键盘是乙。甲打 <span class="kbd">a</span> 显示「甲 · a」；
-          乙打 <span class="kbd">a</span> 会变成 <span class="kbd">å</span>，这里显示「乙 · å → a」。
-          没有第二把键盘时，用练习模式把所有按键分配给某一侧即可彩排。
+          <strong>两个人可以同时打。</strong>系统只有一个焦点，游戏按每个键是普通字母还是
+          <span class="kbd">å</span> 分到左/右，所以左右是两条独立进度。
+          Karabiner → Devices：只给<strong>外接键盘</strong>勾 Modify events，内置键盘不要勾，避免 Option 串到甲。
+          导入 <span class="kbd">public/karabiner/computerization-typeduel.json</span>。
+          甲打 <span class="kbd">a</span> 应进左栏；乙打 <span class="kbd">a</span> 变成 <span class="kbd">å</span> 进右栏。
         </p>
         <div class="actions">
+          <button id="clear-pads">清空测试</button>
           <button class="primary" id="next">题库</button>
         </div>
       </div>`;
     bind("#back", () => go("title"));
     bind("#next", () => go("lobby"));
+    bind("#clear-pads", () => {
+      testPads.A = "";
+      testPads.B = "";
+      probe = "测试已清空";
+      render();
+    });
     document.querySelector("#name-a")?.addEventListener("input", (e) => {
       names.A = (e.target as HTMLInputElement).value || "甲";
     });

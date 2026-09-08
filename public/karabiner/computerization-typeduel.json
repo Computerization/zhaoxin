@@ -2,7 +2,7 @@
   "title": "Computerization 对码 · 乙键盘",
   "rules": [
     {
-      "description": "外接键盘（非 Mac 内置键盘）映射为乙选手：字母 a 变成 å，其余走 Option 层；死键与退格/回车/Tab 使用 Control+Option。",
+      "description": "仅修改非内置键盘为乙选手（a→å）。Devices 里只给这把外接键盘勾 Modify events，这样两人可以同时打、Option 不会串到甲。",
       "manipulators": [
         {
           "type": "basic",

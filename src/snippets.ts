@@ -8,9 +8,7 @@ export const SNIPPETS: Snippet[] = [
     language: "js",
     difficulty: "warm",
     visualizer: "logo",
-    code: `const club = "Computerization";
-console.log("招新开始", club.length);
-`,
+    code: `console.log("Computerization");`,
   },
   {
     id: "neon",
@@ -19,9 +17,7 @@ console.log("招新开始", club.length);
     language: "css",
     difficulty: "warm",
     visualizer: "neon",
-    code: `.sign { color: #7cffd4; text-shadow: 0 0 24px #7cffd4; }
-.sign::after { content: "C社招新"; }
-`,
+    code: `.sign { color: #7cffd4; text-shadow: 0 0 18px cyan; }`,
   },
   {
     id: "niu",
@@ -30,11 +26,8 @@ console.log("招新开始", club.length);
     language: "js",
     difficulty: "warm",
     visualizer: "cow",
-    code: `function niuLai() {
-  return "🐄".repeat(8) + " 牛来!";
-}
-niuLai();
-`,
+    code: `function niuLai() { return "moo".repeat(8); }
+niuLai();`,
   },
   {
     id: "sort",
@@ -51,8 +44,7 @@ niuLai();
   }
   return a;
 }
-bubble([3, 1, 4, 1, 5, 9, 2, 6]);
-`,
+bubble([3, 1, 4, 1, 5, 9, 2, 6]);`,
   },
   {
     id: "fib",
@@ -64,8 +56,7 @@ bubble([3, 1, 4, 1, 5, 9, 2, 6]);
     code: `function fib(n) {
   return n < 2 ? n : fib(n - 1) + fib(n - 2);
 }
-const seq = [...Array(10)].map((_, i) => fib(i));
-`,
+const seq = [...Array(10)].map((_, i) => fib(i));`,
   },
   {
     id: "tree",
@@ -78,8 +69,7 @@ const seq = [...Array(10)].map((_, i) => fib(i));
   if (depth === 0) return "*";
   return grow(depth - 1) + "/" + grow(depth - 1);
 }
-grow(4);
-`,
+grow(4);`,
   },
   {
     id: "matrix",
@@ -89,8 +79,7 @@ grow(4);
     difficulty: "abstract",
     visualizer: "matrix",
     code: `const rain = (s) => [...s].map((c) => c.charCodeAt(0) % 2 ? "0" : "1");
-rain("join computerization");
-`,
+rain("join computerization");`,
   },
   {
     id: "life",
@@ -101,8 +90,7 @@ rain("join computerization");
     visualizer: "life",
     code: `const next = (alive, n) => (alive && n === 2) || n === 3;
 let cells = [0, 1, 1, 0, 1, 1, 1, 0];
-cells = cells.map((c, i) => next(c, cells[i - 1] + cells[i + 1]) ? 1 : 0);
-`,
+cells = cells.map((c, i) => next(c, cells[i - 1] + cells[i + 1]) ? 1 : 0);`,
   },
   {
     id: "fireworks",
@@ -116,8 +104,7 @@ cells = cells.map((c, i) => next(c, cells[i - 1] + cells[i + 1]) ? 1 : 0);
     x: Math.cos(i), y: Math.sin(i),
   }));
 }
-boom(24);
-`,
+boom(24);`,
   },
   {
     id: "pong",
@@ -131,8 +118,7 @@ function tick() {
   x += v;
   if (x > 10 || x < 0) v *= -1;
 }
-tick();
-`,
+tick();`,
   },
 ];
 
