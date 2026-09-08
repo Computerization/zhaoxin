@@ -12,7 +12,7 @@ export interface VizFrame {
 export function renderVisualizer(id: VisualizerId, frame: VizFrame): void {
   const { ctx, w, h } = frame;
   ctx.clearRect(0, 0, w, h);
-  ctx.fillStyle = "rgba(6, 8, 14, 0.35)";
+  ctx.fillStyle = "rgba(243, 236, 218, 0.35)";
   ctx.fillRect(0, 0, w, h);
   switch (id) {
     case "logo":

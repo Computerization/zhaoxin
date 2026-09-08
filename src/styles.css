@@ -1,12 +1,15 @@
 :root {
-  --bg: #07080d;
-  --panel: #0e1118;
-  --ink: #e8eef7;
-  --muted: #8b97ab;
-  --a: #7cffd4;
-  --b: #ff7ab8;
-  --danger: #ff5c7a;
-  --line: rgba(255, 255, 255, 0.08);
+  --bg: #faf6ed;
+  --bg-deep: #f3ecda;
+  --panel: #efe7d4;
+  --ink: #2d261c;
+  --muted: #8c7d5f;
+  --a: #c4623f;
+  --b: #4f837f;
+  --danger: #b8443c;
+  --line: rgba(45, 38, 28, 0.10);
+  --line-soft: rgba(45, 38, 28, 0.06);
+  --code-bg: #f0e8d4;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
   --font-sans: "Noto Sans SC", sans-serif;
   --font-display: "Orbitron", sans-serif;
@@ -28,10 +31,10 @@ body {
 
 body {
   background-image:
-    radial-gradient(900px 500px at 15% -10%, rgba(124, 255, 212, 0.12), transparent 55%),
-    radial-gradient(900px 500px at 90% 0%, rgba(255, 122, 184, 0.12), transparent 50%),
-    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    radial-gradient(900px 500px at 15% -10%, rgba(196, 98, 63, 0.10), transparent 55%),
+    radial-gradient(900px 500px at 90% 0%, rgba(79, 131, 127, 0.10), transparent 50%),
+    linear-gradient(rgba(45, 38, 28, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(45, 38, 28, 0.04) 1px, transparent 1px);
   background-size: auto, auto, 48px 48px, 48px 48px;
 }
 
@@ -72,6 +75,7 @@ h1 {
   font-size: clamp(48px, 9vw, 108px);
   margin: 8px 0 0;
   line-height: 0.9;
+  color: var(--ink);
 }
 
 h1 span {
@@ -102,24 +106,40 @@ button,
 .btn {
   appearance: none;
   border: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.45);
   color: var(--ink);
   font: inherit;
   padding: 12px 18px;
   border-radius: 999px;
   cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+button:hover {
+  background: rgba(255, 255, 255, 0.7);
+  border-color: rgba(45, 38, 28, 0.2);
 }
 
 button.primary {
   background: var(--a);
-  color: #04140f;
+  color: #fff;
   font-weight: 700;
+  border-color: transparent;
+}
+
+button.primary:hover {
+  background: #b25a39;
 }
 
 button.pink {
   background: var(--b);
-  color: #2a0718;
+  color: #fff;
   font-weight: 700;
+  border-color: transparent;
+}
+
+button.pink:hover {
+  background: #447470;
 }
 
 button:disabled {
@@ -133,12 +153,15 @@ button:disabled {
   align-items: center;
   padding: 16px 24px;
   border-bottom: 1px solid var(--line);
+  background: rgba(250, 246, 237, 0.7);
+  backdrop-filter: blur(6px);
 }
 
 .brand {
   font-family: var(--font-display);
   font-size: 14px;
   letter-spacing: 0.18em;
+  color: var(--ink);
 }
 
 .split {
@@ -164,6 +187,14 @@ button:disabled {
 .lane h2 {
   margin: 0;
   font-size: 22px;
+  color: var(--ink);
+}
+
+.lane.A h2 {
+  color: var(--a);
+}
+.lane.B h2 {
+  color: var(--b);
 }
 
 .lane .meta {
@@ -174,7 +205,7 @@ button:disabled {
 
 .meter {
   height: 8px;
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(45, 38, 28, 0.08);
   border-radius: 99px;
   overflow: hidden;
   margin: 16px 0;
@@ -201,23 +232,23 @@ button:disabled {
   line-height: 1.65;
   white-space: pre;
   padding: 16px;
-  background: rgba(0, 0, 0, 0.28);
+  background: var(--code-bg);
   border-radius: 16px;
   border: 1px solid var(--line);
+  color: var(--ink);
 }
 
 .ok {
-  color: var(--a);
+  color: #3d8055;
 }
 .lane.B .ok {
-  color: var(--b);
+  color: #3d8055;
 }
 .bad {
   color: var(--danger);
-  text-decoration: underline wavy;
 }
 .rest {
-  color: rgba(232, 238, 247, 0.32);
+  color: rgba(45, 38, 28, 0.32);
 }
 .caret {
   display: inline-block;
@@ -256,11 +287,19 @@ button:disabled {
   border-radius: 18px;
   padding: 16px;
   border: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.03);
+  background: var(--panel);
+  color: var(--ink);
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+
+.card:hover {
+  border-color: rgba(45, 38, 28, 0.2);
+  transform: translateY(-1px);
 }
 
 .card.active {
   outline: 2px solid var(--a);
+  background: var(--bg-deep);
 }
 
 .card small {
@@ -286,10 +325,16 @@ input,
 select {
   font: inherit;
   color: var(--ink);
-  background: rgba(0, 0, 0, 0.35);
+  background: var(--bg);
   border: 1px solid var(--line);
   border-radius: 12px;
   padding: 10px 12px;
+}
+
+input:focus,
+select:focus {
+  outline: none;
+  border-color: var(--a);
 }
 
 .count {
@@ -298,6 +343,7 @@ select {
   place-items: center;
   font-family: var(--font-display);
   font-size: 28vw;
+  color: var(--ink);
 }
 
 .chaos {
@@ -308,6 +354,7 @@ select {
   place-items: center;
   pointer-events: none;
   text-align: center;
+  color: var(--ink);
 }
 
 .chaos h3 {
@@ -316,7 +363,7 @@ select {
 }
 
 .chaos.niu {
-  background: rgba(7, 8, 13, 0.72);
+  background: rgba(250, 246, 237, 0.85);
 }
 
 .herd {
@@ -343,8 +390,10 @@ select {
 .npmbar {
   width: min(520px, 80vw);
   height: 16px;
-  background: #111;
+  background: var(--bg-deep);
   border: 1px solid var(--line);
+  border-radius: 99px;
+  overflow: hidden;
 }
 
 .npmbar i {
@@ -390,6 +439,7 @@ select {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  color: var(--ink);
 }
 
 .banner h2 {
@@ -401,7 +451,7 @@ select {
   width: 100%;
   height: 100%;
   display: block;
-  background: #05070c;
+  background: var(--bg-deep);
 }
 
 .help {
@@ -413,7 +463,7 @@ select {
 
 .kbd {
   font-family: var(--font-mono);
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(45, 38, 28, 0.08);
   padding: 1px 6px;
   border-radius: 6px;
 }
@@ -426,6 +476,8 @@ select {
   border: 1px dashed var(--line);
   margin: 12px 24px 0;
   min-height: 56px;
+  background: var(--panel);
+  color: var(--ink);
 }
 
 .pads {
@@ -440,7 +492,8 @@ select {
   border: 1px solid var(--line);
   border-radius: 16px;
   padding: 12px 16px;
-  background: rgba(0, 0, 0, 0.28);
+  background: var(--panel);
+  color: var(--ink);
 }
 
 .pad pre {

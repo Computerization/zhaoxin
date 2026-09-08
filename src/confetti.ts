@@ -16,7 +16,7 @@ export class Confetti {
   private running = false;
 
   burst(width: number, _height: number, color: string): void {
-    const palette = [color, "#fff7d6", "#ffd166", "#ffffff", "#ff4d6d"];
+    const palette = [color, "#faf6ed", "#f0d9a8", "#e8c074", "#c4623f"];
     for (let i = 0; i < 140; i++) {
       this.particles.push({
         x: width * (0.2 + Math.random() * 0.6),

@@ -1,8 +1,8 @@
 {
-  "title": "Computerization 对码 · 乙键盘",
+  "title": "Computerization 对码 · 乙键盘 (RU2P)",
   "rules": [
     {
-      "description": "仅修改非内置键盘为乙选手（a→å）。Devices 里只给这把外接键盘勾 Modify events，这样两人可以同时打、Option 不会串到甲。",
+      "description": "仅修改非内置键盘为乙选手（每个键叠 Option，由 RU2P 布局翻译为 Cyrillic / 汉字）。Devices 里只给这把外接键盘勾 Modify events，这样两人可以同时打、Option 不会串到甲。键位对照见 RU2P-keymap.md。",
       "manipulators": [
         {
           "type": "basic",
@@ -266,7 +266,6 @@
             {
               "key_code": "e",
               "modifiers": [
-                "right_control",
                 "right_option"
               ]
             }
@@ -299,7 +298,6 @@
             {
               "key_code": "e",
               "modifiers": [
-                "right_control",
                 "right_option",
                 "left_shift"
               ]
@@ -516,7 +514,6 @@
             {
               "key_code": "i",
               "modifiers": [
-                "right_control",
                 "right_option"
               ]
             }
@@ -549,7 +546,6 @@
             {
               "key_code": "i",
               "modifiers": [
-                "right_control",
                 "right_option",
                 "left_shift"
               ]
@@ -828,7 +824,6 @@
             {
               "key_code": "n",
               "modifiers": [
-                "right_control",
                 "right_option"
               ]
             }
@@ -861,7 +856,6 @@
             {
               "key_code": "n",
               "modifiers": [
-                "right_control",
                 "right_option",
                 "left_shift"
               ]
@@ -1264,7 +1258,6 @@
             {
               "key_code": "u",
               "modifiers": [
-                "right_control",
                 "right_option"
               ]
             }
@@ -1297,7 +1290,6 @@
             {
               "key_code": "u",
               "modifiers": [
-                "right_control",
                 "right_option",
                 "left_shift"
               ]
@@ -2878,7 +2870,6 @@
             {
               "key_code": "grave_accent_and_tilde",
               "modifiers": [
-                "right_control",
                 "right_option"
               ]
             }
@@ -2911,7 +2902,6 @@
             {
               "key_code": "grave_accent_and_tilde",
               "modifiers": [
-                "right_control",
                 "right_option",
                 "left_shift"
               ]
@@ -2942,7 +2932,6 @@
             {
               "key_code": "spacebar",
               "modifiers": [
-                "right_control",
                 "right_option"
               ]
             }
@@ -2972,7 +2961,6 @@
             {
               "key_code": "return_or_enter",
               "modifiers": [
-                "right_control",
                 "right_option"
               ]
             }
@@ -3002,7 +2990,6 @@
             {
               "key_code": "delete_or_backspace",
               "modifiers": [
-                "right_control",
                 "right_option"
               ]
             }
@@ -3032,7 +3019,6 @@
             {
               "key_code": "tab",
               "modifiers": [
-                "right_control",
                 "right_option"
               ]
             }

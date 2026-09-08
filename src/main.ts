@@ -6,6 +6,8 @@ import {
   accuracy,
   applyBackspace,
   applyChar,
+  applyCursorLeft,
+  applyCursorRight,
   canType,
   createMatch,
   progress,
@@ -50,21 +52,33 @@ const hub = createInputHub((action) => {
   if (!canType(match, now)) return;
   const player = match.players[action.player];
   const target = match.snippet.code;
+  let strokeOk = false;
   if (action.kind === "backspace") {
     applyBackspace(player);
   } else if (action.kind === "enter") {
     applyChar(player, "\n", target);
+    strokeOk = target[player.cursor - 1] === "\n";
+    sfx.key(strokeOk);
   } else if (action.kind === "tab") {
-    applyChar(player, nextIndent(target, player.typed), target);
+    const tab = nextIndent(target, player.cursor);
+    if (tab) {
+      applyChar(player, tab, target);
+      strokeOk = target[player.cursor - 1] === tab;
+      sfx.key(strokeOk);
+    }
+  } else if (action.kind === "left") {
+    applyCursorLeft(player);
+  } else if (action.kind === "right") {
+    applyCursorRight(player);
   } else {
     applyChar(player, action.value, target);
+    strokeOk = target[player.cursor - 1] === action.value;
+    sfx.key(strokeOk);
   }
-  const ok = target.startsWith(player.typed);
-  sfx.key(ok);
   tryWin(match, action.player);
   if (match.winner) {
     sfx.win();
-    const color = match.winner === "A" ? "#7cffd4" : "#ff7ab8";
+    const color = match.winner === "A" ? "#c4623f" : "#4f837f";
     confetti.burst(window.innerWidth, window.innerHeight, color);
     finishAt = performance.now();
     screen = "finish";
@@ -72,8 +86,8 @@ const hub = createInputHub((action) => {
   render();
 });
 
-function nextIndent(target: string, typed: string): string {
-  const rest = target.slice(typed.length);
+function nextIndent(target: string, cursor: number): string {
+  const rest = target.slice(cursor);
   if (rest.startsWith("\t")) return "\t";
   if (rest.startsWith("  ")) return "  ";
   return "  ";
@@ -107,12 +121,18 @@ function tickCountdown(): void {
 hub.attach();
 
 function renderCode(player: PlayerState, target: string): string {
-  let good = 0;
-  while (good < player.typed.length && player.typed[good] === target[good]) good += 1;
-  const ok = escapeHtml(player.typed.slice(0, good));
-  const bad = escapeHtml(player.typed.slice(good));
-  const rest = escapeHtml(target.slice(good));
-  return `<span class="ok">${ok}</span><span class="bad">${bad}</span><span class="caret"></span><span class="rest">${rest}</span>`;
+  let html = "";
+  for (let i = 0; i < player.typed.length; i++) {
+    if (i === player.cursor) html += '<span class="caret"></span>';
+    const ch = player.typed[i]!;
+    const cls = ch === target[i] ? "ok" : "bad";
+    html += `<span class="${cls}">${escapeHtml(ch)}</span>`;
+  }
+  if (player.cursor === player.typed.length) {
+    html += '<span class="caret"></span>';
+  }
+  html += `<span class="rest">${escapeHtml(target.slice(player.typed.length))}</span>`;
+  return html;
 }
 
 function escapeHtml(s: string): string {
@@ -346,7 +366,7 @@ function loop(): void {
           w: viz.width,
           h: viz.height,
           t: (now - finishAt) / 1000,
-          color: match.winner === "B" ? "#ff7ab8" : "#7cffd4",
+          color: match.winner === "B" ? "#4f837f" : "#c4623f",
           won: true,
         });
       }

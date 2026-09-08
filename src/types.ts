@@ -34,6 +34,7 @@ export interface PlayerState {
   id: PlayerId;
   name: string;
   typed: string;
+  cursor: number;
   combo: number;
   maxCombo: number;
   strokes: number;
@@ -62,6 +63,7 @@ export function emptyPlayer(id: PlayerId, name: string): PlayerState {
     id,
     name,
     typed: "",
+    cursor: 0,
     combo: 0,
     maxCombo: 0,
     strokes: 0,

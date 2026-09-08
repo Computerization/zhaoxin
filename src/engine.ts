@@ -18,26 +18,41 @@ export function createMatch(snippet: Snippet, names: Record<PlayerId, string>): 
 export function applyChar(player: PlayerState, ch: string, target: string): void {
   player.strokes += 1;
   player.lastHitAt = performance.now();
-  const next = player.typed + ch;
-  if (target.startsWith(next)) {
-    player.typed = next;
+  const before = player.typed.slice(0, player.cursor);
+  const after = player.typed.slice(player.cursor);
+  player.typed = before + ch + after;
+  if (target[player.cursor] === ch) {
     player.correct += 1;
     player.combo += 1;
     player.maxCombo = Math.max(player.maxCombo, player.combo);
   } else {
-    player.typed = next;
     player.combo = 0;
   }
+  player.cursor += 1;
 }
 
 export function applyBackspace(player: PlayerState): void {
-  if (!player.typed) return;
-  player.typed = player.typed.slice(0, -1);
+  if (player.cursor === 0) return;
+  player.typed = player.typed.slice(0, player.cursor - 1) + player.typed.slice(player.cursor);
+  player.cursor -= 1;
   player.combo = 0;
 }
 
+export function applyCursorLeft(player: PlayerState): void {
+  if (player.cursor === 0) return;
+  player.cursor -= 1;
+}
+
+export function applyCursorRight(player: PlayerState): void {
+  if (player.cursor >= player.typed.length) return;
+  player.cursor += 1;
+}
+
 export function isCorrectSoFar(player: PlayerState, target: string): boolean {
-  return target.startsWith(player.typed);
+  for (let i = 0; i < player.typed.length; i++) {
+    if (player.typed[i] !== target[i]) return false;
+  }
+  return true;
 }
 
 export function finished(player: PlayerState, target: string): boolean {

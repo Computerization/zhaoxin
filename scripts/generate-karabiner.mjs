@@ -4,7 +4,6 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const letters = "abcdefghijklmnopqrstuvwxyz".split("");
-const dead = new Set(["e", "i", "n", "u"]);
 const digits = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"];
 const punctuation = [
   "hyphen",
@@ -45,34 +44,30 @@ function rule(fromKey, toMods, shift) {
 const manipulators = [];
 
 for (const key of letters) {
-  const mods = dead.has(key) ? ["right_control", "right_option"] : ["right_option"];
-  manipulators.push(rule(key, mods, false));
-  manipulators.push(rule(key, mods, true));
-}
-
-for (const key of [...digits, ...punctuation]) {
   manipulators.push(rule(key, ["right_option"], false));
   manipulators.push(rule(key, ["right_option"], true));
 }
 
-manipulators.push(rule("grave_accent_and_tilde", ["right_control", "right_option"], false));
-manipulators.push(rule("grave_accent_and_tilde", ["right_control", "right_option"], true));
+for (const key of [...digits, ...punctuation, "grave_accent_and_tilde"]) {
+  manipulators.push(rule(key, ["right_option"], false));
+  manipulators.push(rule(key, ["right_option"], true));
+}
 
 for (const key of ["spacebar", "return_or_enter", "delete_or_backspace", "tab"]) {
   manipulators.push({
     type: "basic",
     from: { key_code: key, modifiers: { optional: ["caps_lock"] } },
-    to: [{ key_code: key, modifiers: ["right_control", "right_option"] }],
+    to: [{ key_code: key, modifiers: ["right_option"] }],
     conditions,
   });
 }
 
 const json = {
-  title: "Computerization 对码 · 乙键盘",
+  title: "Computerization 对码 · 乙键盘 (RU2P)",
   rules: [
     {
       description:
-        "仅修改非内置键盘为乙选手（a→å）。Devices 里只给这把外接键盘勾 Modify events，这样两人可以同时打、Option 不会串到甲。",
+        "仅修改非内置键盘为乙选手（每个键叠 Option，由 RU2P 布局翻译为 Cyrillic / 汉字）。Devices 里只给这把外接键盘勾 Modify events，这样两人可以同时打、Option 不会串到甲。键位对照见 RU2P-keymap.md。",
       manipulators,
     },
   ],
